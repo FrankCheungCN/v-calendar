@@ -8,7 +8,7 @@
   @focusout='focusout'
   @mouseleave='mouseleave'
   @mousemove='mousemove'
-  @click.stop='click'>
+  @click='click'>
   <transition
     tag='div'
     :name='transition'

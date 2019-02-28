@@ -34,18 +34,18 @@
       @click='click'
       @mouseenter='mouseenter'
       @mouseover='mouseover'
-      @mouseleave='mouseleave'>
+      @mouseleave='mouseleave'
+      v-clickoutside="() => { isDayFocused = false }">
       <slot
-        name='day-content' 
+        name='day-content'
         :day='day'
         :content-style='contentStyle'
         :attributes='attributesList'>
         <div
           class='c-day-content'
+          :class="[{'c-day-background--hover': isHovered && !isDayFocused}, {'c-day-background--focused': isDayFocused}]"
           :style='contentStyle'>
-          <div>
-            {{ day.label }}
-          </div>
+          <div>{{day.label}}</div>
         </div>
       </slot>
     </div>
@@ -137,12 +137,14 @@ import {
 } from '@/utils/helpers';
 import { isFunction, isObject } from '@/utils/typeCheckers';
 import defaults from '@/utils/defaults';
+import clickoutside from '@/utils/clickoutside'
 
 export default {
   components: {
     Popover,
     CalendarDayPopoverRow,
   },
+  directives: { clickoutside },
   props: {
     day: { type: Object, required: true },
     attributes: Object,
@@ -154,6 +156,7 @@ export default {
     return {
       isHovered: false,
       isFocused: false,
+      isDayFocused: false,
       glyphs: {},
     };
   },
@@ -302,6 +305,7 @@ export default {
       };
     },
     click(e) {
+      this.isDayFocused = true;
       this.$emit('dayclick', this.getDayEvent(e));
     },
     mouseenter(e) {
@@ -629,7 +633,8 @@ export default {
   align-items: center
   pointer-events: all
   user-select: none
-  cursor: default
+  // cursor: default
+  cursor: pointer
 
 .c-day-content
   display: flex
@@ -643,6 +648,17 @@ export default {
   border-radius: $day-content-border-radius
   transition: all $day-content-transition-time
   margin: .1rem .08rem
+  &.c-day-background--hover,
+  &.c-day-background--focused
+    width: 1.8rem
+    height: 1.8rem
+    background-color: #3488ea
+    border-width: 0px
+    border-style: solid
+    border-radius: 50%
+    color: #fff
+  &.c-day-background--hover
+    opacity: 0.4
 
 .c-day-backgrounds
   overflow: hidden
