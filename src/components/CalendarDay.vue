@@ -56,12 +56,13 @@
       <div
         class='c-day-dots'
         :style='dotsStyle'>
-        <span
+        <span class="c-day-dot" :style="dot.style"></span>
+        <!-- <span
           v-for='dot in dots'
           :key='dot.key'
           class='c-day-dot'
           :style='dot.style'>
-        </span>
+        </span> -->
       </div>
     </div>
     <!-- Bars layer -->
