@@ -56,7 +56,7 @@
       <div
         class='c-day-dots'
         :style='dotsStyle'>
-        <span class="c-day-dot" :style="dot.style"></span>
+        <span class="c-day-dot" :style="dots[0].style"></span>
         <!-- <span
           v-for='dot in dots'
           :key='dot.key'
